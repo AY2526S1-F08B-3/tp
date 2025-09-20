@@ -10,6 +10,11 @@ public class Remark {
 
     public final String value;
 
+    /**
+     * Constructs a {@code Remark}.
+     *
+     * @param remark The remark to be associated with the person.
+     */
     public Remark(String remark) {
         requireNonNull(remark);
         value = remark;

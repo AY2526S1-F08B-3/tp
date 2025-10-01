@@ -167,7 +167,7 @@ Step 1. The user launches the application for the first time. The application di
 
 Step 2. The user executes `find tutor /s maths` command to find tutors teaching mathematics. The `FindCommandParser` validates the input and creates a `FindCommand`. The command executes and calls `Model#getFilteredPersonList()` with the predicate, filtering the displayed list to show only tutors teaching mathematics.
 
-![UndoRedoState1](images/UndoRedoState1.png)
+![UndoRedoState1](images/FindState1.png)
 
 ![UndoRedoState2](images/UndoRedoState2.png)
 
@@ -178,11 +178,9 @@ Step 2. The user executes `find tutor /s maths` command to find tutors teaching 
 
 Step 3. The user executes `list` to view all persons again. The `list` command resets the filter by calling `Model#getFilteredPersonList`, displaying the complete list of tutors and students.
 
-![UndoRedoState3](images/UndoRedoState3.png)
-
 The following sequence diagram shows how a find operation goes through the `Logic` component:
 
-![UndoSequenceDiagram](images/UndoSequenceDiagram-Logic.png)
+![FindSequenceDiagram](images/FindSequenceDiagram-Logic.png)
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `FindCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 

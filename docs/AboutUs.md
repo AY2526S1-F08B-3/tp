@@ -38,14 +38,14 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Data
 
-### Jean Doe
+### Ray Kye
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/ragingrogue.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/RagingRogue)]
+[[portfolio](team/ragingrogue.md)]
 
-* Role: Developer
+* Role: Software Developer
 * Responsibilities: Dev Ops + Threading
 
 ### Nicha

@@ -651,20 +651,63 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-### Deleting a person
+### Adding a tutor
 
-1. Deleting a person while all persons are being shown
+1. Adding a tutor.
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   1. Test case: `add tutor aaron /hp 91234567 /a Blk 30 Geylang Street 29, #06-40 /s mathematics /l 3 /p 20-30`<br>
+      Expected: Tutor is added to the list. Details of the added tutor shown in the status message. 
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   1. Test case: `add aaron`<br>
+      Expected: No tutor is added. Error details shown in the status message. Status bar remains the same.
 
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+   1. Other incorrect add commands to try: `add`, `add tutor aaron /hp 0 /a Blk 30 Geylang Street 29, #06-40 /s mathematics /l 3 /p 20-30`<br>
       Expected: Similar to previous.
+
+### Deleting a tutor
+
+1. Deleting a tutor while all tutors are being shown.
+
+    1. Prerequisites: List all tutors using the `list tutors` command. Multiple tutors will be listed.
+
+    1. Test case: `delete t1`<br>
+       Expected: First tutor is deleted from the list. Details of the deleted tutor shown in the status message.
+
+    1. Test case: `delete t0`<br>
+       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+
+    1. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size or smaller than 1)<br>
+       Expected: Similar to previous.
+
+### Finding a student
+
+1. Finding a student or students.
+
+    1. Test case: `find student /s english`<br>
+       Expected: Students that have the 'english' subject are being listed. 
+
+    1. Test case: `find student`<br>
+       Expected: No student is listed. Error details shown in the status message. Status bar remains the same.
+
+    1. Other incorrect add commands to try: `find`, `find student /s eng`<br>
+       Expected: Similar to previous.
+
+### Matching a student and tutor
+
+1. Matching a student and tutor shown in the list.
+
+    1. Prerequisites: 
+       1. Find tutor using the `find tutor ...` command. Take note of the index of the tutor (e.g. `t1`).
+       1. Find student using the `find student ...` command. Take note of the index of the student (e.g. `s1`).
+
+    1. Test case: `match t1 s1`<br>
+       Expected: Tutor with index `t1` and student with index `s1` are being matched.
+
+    1. Test case: `match t0 s0`<br>
+       Expected: No student and tutor matched. Error details shown in the status message. Status bar remains the same.
+
+    1. Other incorrect add commands to try: `match t1`, `match s1`<br>
+       Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
 

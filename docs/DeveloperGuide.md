@@ -264,33 +264,274 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `ConnectEd` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case: Add a student/tutor**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. User requests to add a person by providing role (tutor/student), name, phone, address, subject, level, and price.
+2. ConnectEd validates all fields.
+3. ConnectEd adds the new person to the database.
+4. ConnectEd shows a success message and the updated list.
+Use case ends.
+
+**Extensions**
+
+* 2a. One or more fields are missing or in the wrong format.
+ 
+    ConnectEd shows an error message indicating the invalid/missing field(s).
+ 
+    Use case resumes at step 1 with corrected input.
+
+* 2b. A duplicate person (same role, same name, same phone) exists.
+  ConnectEd rejects the add and shows a duplicate warning.
+  
+    Use case ends.
+
+* 3a. Storage fails (e.g., I/O error).
+  * 3a1. ConnectEd shows “Error saving data: add”.
+  
+    Use case ends.
+
+**Use case: List tutors/students**
+
+**MSS**
+
+1. User requests to list either tutors or students.
+
+2. ConnectEd shows the requested list with indices.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. The parameter is missing or invalid.
+    * 1a1. ConnectEd shows “Wrong command format! Please use ‘list <tutors/students>’ ”.
+        
+        Use case ends.
+
+* 2a. The requested list is empty.
+  * 2a1. ConnectEd shows “No <tutors/students> in the list yet!”.
+  
+    Use case ends.
+
+**Use case: Find tutors/students (by subject / level / price)**
+
+**MSS**
+
+1. User requests to find either tutors or students with a field filter (/s, /l, or /p) and a value.
+
+2. ConnectEd validates the role, field, and filter value.
+
+3. ConnectEd displays the filtered list with indices.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. Role is missing or not tutor/student.
+  * 2a1. ConnectEd shows “Please specify whether you are finding a tutor or student!”.
+  
+    Use case ends.
+
+* 2b. Field is not one of /s, /l, /p.
+  * 2b1. ConnectEd shows “Field must be /s (subject), /l (level), or /p (price range)!”.
+    
+    Use case ends.
+
+* 2c. Filter value is malformed (e.g., level not 1–6; price not min-max).
+  * 2c1. ConnectEd shows “Filter must match the field type (e.g., /l <level>, /p <range>).”.
+  
+    Use case ends.
+
+* 3a. No entries match the filter.
+  * 3a1. ConnectEd shows “No <tutors/students> found matching the filter!”.
+  Use case ends.
+
+* 3b. The underlying list for that role is empty.
+  * 3b1. ConnectEd shows “There are no <tutors/students> yet!”.
+  
+    Use case ends.
+
+**Use case: Match a tutor to a student**
+
+**Preconditions: At least one tutor and one student exist and are visible (possibly after list/find).**
+
+**Guarantees: On success, both sides reflect a bidirectional match.**
+
+**MSS**
+
+1. User requests to match using visible indices: match `t<INDEX>` `s<INDEX>`.
+
+2. ConnectEd validates both indices against the currently displayed Tutor list and Student list.
+
+3. ConnectEd checks that neither party is already matched.
+
+4. ConnectEd links the tutor and student (one-to-one) and updates both profiles.
+
+5. ConnectEd shows success message (e.g., “Matched t1 Alice with s2 Ben”).
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 2a. Either index is invalid/out of range/not visible.
+  * 2a1. ConnectEd shows an index error (role-specific).
+  
+    Use case resumes at step 1.
 
-  Use case ends.
+* 3a. Tutor is already matched.
+  * 3a1. ConnectEd shows “Tutor <TutorName> is already matched to <OtherStudentName>. Unmatch first.”
+  
+    Use case ends.
 
-* 3a. The given index is invalid.
+* 3b. Student is already matched.
+  * 3b1. ConnectEd shows “Student <StudentName> is already matched to <OtherTutorName>. Unmatch first.”
+  
+    Use case ends.
 
-    * 3a1. AddressBook shows an error message.
+* 4a. The exact pair is already matched (idempotent).
+  * 4a1. ConnectEd shows “No change: Tutor <TutorName> is already matched to Student <StudentName>.”
+  
+    Use case ends.
 
-      Use case resumes at step 2.
+* 4b. No tutors or students exist.
+  * 4b1. ConnectEd shows “There are no tutors and students to match!”.
+  
+    Use case ends.
 
-*{More to be added}*
+* 4c. Storage fails.
+  * 4c1. ConnectEd shows “Error saving data: match”.
+  
+    Use case ends.
 
+**Use case: Unmatch a tutor and student**
+
+**Preconditions: The specified tutor or student is currently matched.**
+
+**Guarantees: On success, neither side remains matched.**
+
+**MSS**
+
+1. User requests to unmatch by specifying one side: unmatch `t<INDEX>` or unmatch `s<INDEX>`.
+
+2. ConnectEd validates the index against the currently displayed list for that role.
+
+3. ConnectEd verifies there is a linked counterpart.
+
+4. ConnectEd removes the bidirectional link and updates both profiles.
+
+5. ConnectEd shows success message (e.g., “Unmatched t1 Alice and s2 Ben”).
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. Index invalid/out of range/not visible.
+  * 2a1. ConnectEd shows a role-specific index error.
+  
+    Use case resumes at step 1.
+
+* 3a. The specified person is not matched.
+  * 3a1. ConnectEd shows “No change: <Role> <Name> is not currently matched.”
+    
+    Use case ends.
+
+* 4a. Storage fails.
+  * 4a1. ConnectEd shows “Error saving data: unmatch”.
+    
+    Use case ends.
+
+**Use case: Delete a person (tutor/student)**
+
+**Preconditions: If matched, the person must be unmatched first.**
+
+**Guarantees: On success, the person is removed and indices are re-numbered.**
+
+**MSS**
+
+1. User requests to delete a specific person using role + index: delete t<INDEX> or delete s<INDEX>.
+
+2. ConnectEd validates the role and index.
+
+3. ConnectEd confirms the person is not currently matched.
+
+4. ConnectEd deletes the person and updates the list.
+
+5. ConnectEd shows a success message and the refreshed list.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. Role not specified or wrong format.
+  * 2a1. ConnectEd shows “Please specify tutor/student to be deleted using delete `t<index>` or delete `s<index>`!”.
+  
+    Use case ends.
+
+* 2b. Index invalid/out of range/not visible.
+  * 2b1. ConnectEd shows “This person doesn’t exist! Please check the index again”.
+  
+    Use case ends.
+
+* 3a. Person is matched.
+  * 3a1. ConnectEd shows “<Tutor/Student> is matched, please unmatch before deleting …”.
+  
+    Use case ends.
+
+* 4a. No entries exist for that role.
+  * 4a1. ConnectEd shows “There are no <tutors/students> yet!”.
+  
+    Use case ends.
+
+* 4b. Storage fails.
+  * 4b1. ConnectEd shows “Error saving data: delete”.
+  
+    Use case ends.
+
+**Use case: Save data (automatic)**
+
+**MSS**
+
+1. User executes a data-changing command (e.g., add, match, unmatch, delete).
+
+2. ConnectEd persists the updated data to disk automatically.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. Data file missing or corrupted on first run.
+  * 2a1. ConnectEd shows “No/Corrupted data found, creating new data file”.
+  * 2a2. ConnectEd creates a new empty data file.
+    
+    Use case ends.
+
+* 2b. Storage failure.
+  * 2b1. ConnectEd shows “Error saving data: <command>”.
+    
+    Use case ends.
+
+**Use case: Exit application**
+
+**MSS**
+
+1. User requests to exit the application.
+
+2. ConnectEd ensures all pending data is saved.
+
+3. ConnectEd closes the application.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. Save fails during exit.
+  * 2a1. ConnectEd shows “Error: Unable to exit application”.
+  * 2a2. ConnectEd remains open so the user can retry or back up data.
+  
+    Use case ends.
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.

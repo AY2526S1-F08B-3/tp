@@ -231,7 +231,7 @@ Step 2. The user executes `match t1 s2` command to match the first tutor with th
 * Verifies neither tutor nor student is already matched to someone else
 * Creates bidirectional references between the tutor and student
 * Updates the GUI to display the match information in both entities' profiles
-![UndoRedoState1](images/MatchState1.png)git reset --mixed HEAD~1
+![UndoRedoState1](images/MatchState1.png)
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** If a match command fails validation or execution (e.g., invalid index, entity already matched), the command will not modify any state. The user will see an appropriate error message.
 

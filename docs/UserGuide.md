@@ -154,7 +154,7 @@ Format:
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `match t1 s2` matches the 1st tutor in the tutor list with the 2nd student in the student list.
+* `match t1 s1` matches the 1st tutor in the tutor list with the 1st student in the student list.
 * `unmatch t1` unmatch the 1st tutor in the tutor list with its corresponding matched student.
   ![result for 'match t1 s1'](images/MatchResult.png)
 

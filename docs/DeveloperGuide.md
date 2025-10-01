@@ -231,9 +231,7 @@ Step 2. The user executes `match t1 s2` command to match the first tutor with th
 * Verifies neither tutor nor student is already matched to someone else
 * Creates bidirectional references between the tutor and student
 * Updates the GUI to display the match information in both entities' profiles
-![UndoRedoState1](images/FindState1.png)
-
-![UndoRedoState2](images/UndoRedoState2.png)
+![UndoRedoState1](images/MatchState1.png)git reset --mixed HEAD~1
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** If a match command fails validation or execution (e.g., invalid index, entity already matched), the command will not modify any state. The user will see an appropriate error message.
 
@@ -249,7 +247,7 @@ Step 4. The user executes `match t1 s1` to create a new match. Since both entiti
 
 The following sequence diagram shows how a find operation goes through the `Logic` component:
 
-![FindSequenceDiagram](images/FindSequenceDiagram-Logic.png)
+![FindSequenceDiagram](images/MatchSequenceDiagram-Logic.png)
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `MatchCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 

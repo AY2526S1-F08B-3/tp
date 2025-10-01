@@ -232,13 +232,13 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+* Primary/secondary school **students** seeking tutors for core subjects (English, Maths, Chinese, Science).
+* Freelance **tutors** offering lessons for levels **1–6** (single level or a range).
+* Prefers fast, keyboard-centric workflows; comfortable with CLI.
+* Needs to **filter** and **match** based on **subject**, **level**, and **price range**.
+* Works primarily on desktop (Windows/macOS/Linux) with Java 17+.
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**: A focused CLI app that **adds/list/finds tutors & students** with clear validators (subject/level/price), and lets users **match/unmatch** pairs quickly and reliably — faster and more consistent than maintaining spreadsheets or generic contact apps
 
 
 ### User stories
@@ -247,12 +247,18 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 | Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
 | -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
+| `* * *` | coordinator | **add** a *student* with phone, address, subject, level, price | track requests consistently |
+| `* * *` | coordinator | **add** a *tutor* with phone, address, subject, level(s), price | track offers consistently |
+| `* * *` | coordinator | **list tutors** / **list students** | focus on one category at a time |
+| `* * *` | coordinator | **find** tutors/students by **/s** subject | shortlist relevant candidates |
+| `* * *` | coordinator | **find** by **/l** level | ensure level suitability |
+| `* * *` | coordinator | **find** by **/p** price range | respect budget constraints |
+| `* * *` | coordinator | **match** `t<INDEX>` with `s<INDEX>` | record a pairing |
+| `* * *` | coordinator | **unmatch** a tutor or student | correct/undo a pairing |
+| `* * *` | coordinator | **delete** `t<INDEX>` or `s<INDEX>` | remove obsolete entries |
+| `* *` | coordinator | see clear error messages for invalid inputs | fix mistakes quickly |
+| `* *` | coordinator | prevent duplicates by name+phone+type | keep data clean |
+| `*` | coordinator | edit entries after creation | adjust details without re-adding |
 
 *{More to be added}*
 
@@ -296,7 +302,18 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Private tuition centre database**: A tuition database that is not meant to be shared with others
+
+
+#### Definitions
+* **Tutor / Student** — Person types managed by the app (case-insensitive tokens `tutor` / `student`).
+* **Subject** — One of `{english, maths, chinese, science}`.
+* **Level** — Integer 1–6 (students: single level; tutors: single level or range `x-y`, 1≤x≤y≤6).
+* **Price range** — `min-max` dollars/hour, integers 1–200, `min ≤ max`, no internal spaces.
+* **Typed index** — `t<INDEX>` (tutor) or `s<INDEX>` (student), where `INDEX` is 1-based on the **current** list view.
+* **Match** — A one-to-one link between a tutor and a student; **Unmatch** removes that link.
+* **Duplicate (person)** — Same type **and** same name (case-insensitive) **and** same phone; duplicates are rejected. 
+
 
 --------------------------------------------------------------------------------------------------------------------
 

@@ -21,7 +21,7 @@ ConnectEd is a **desktop app for managing tutors and students, optimized for use
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar connected.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/UiNew.png)
+   ![Ui](images/Ui.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:

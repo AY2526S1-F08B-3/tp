@@ -110,41 +110,70 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-### Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords.
+### Finding student/tutor: `find`
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Returns a filtered list of students/tutors from our database based on one condition (subject, level, or price).
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+Format: `find <tutor/student> /<field> <filter_value>`
+* `<tutor/student>`: specifies whether to search tutors or students.
+* `<field>`: must be one of the following keywords:
+  * `/s`:  subject
+  * `/l`:  level
+  * `/p`:  price range
+* `<filter_value>`:  the keyword/number/range to match against the chosen field.
+
+Parameter specifications:
+* Acceptable values:
+  * `<tutor/student>` must be exactly tutor or student (case insensitive).
+  * `<field>` must be exactly `/s (subject)`, `/l (level 1–6)`, or `/p (price range)`.
+  * `<filter_value>` must match the field:
+    * `/s <subject>`:  subject keyword (e.g., mathematics, english, chinese, science)
+    * `/l <level>`: integer from 1–6 to simulate primary school p1 - p6.
+    * `/p <range>`:  two integers separated by a dash (e.g., 10-20).
 
 Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `find Tutor /s mathematics` returns `tutors` with `mathematics` as their subject.
+* `find tutor /l 3` returns `tutors` that teach children at level `3`.
+* `find Student /p 10-20` returns `students` that will accept the price range of `10-20`.
+  ![result for 'find tutor /s mathematics'](images/FindTutorResult.png)
 
-### Deleting a person : `delete`
+### Match/Unmatch a student and a tutor : `match/unmatch`
 
-Deletes the specified person from the address book.
+Link one Tutor and one Student so both are flagged as Matched and hold a bidirectional reference to each other. 
+Supports undoing via unmatch.
 
-Format: `delete INDEX`
-
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
+Format:
+* Match: `match t<INDEX> s<INDEX>`
+* Unmatch: `unmatch t<INDEX> or s<INDEX>`
+* Matches the student and tutor at the specified `INDEX`.
+* Unmatch the student/tutor at the specified `INDEX` and its corresponding matched tutor/student.
+* The index refers to the index number shown in the displayed tutor/student list.
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+* `match t1 s2` matches the 1st tutor in the tutor list with the 2nd student in the student list.
+* `unmatch t1` unmatch the 1st tutor in the tutor list with its corresponding matched student.
+  ![result for 'match t1 s1'](images/MatchResult.png)
+
+### Deleting a person : `delete`
+
+Deletes a person (student/tutor) from the ConnectEd database
+
+Format:
+* Delete tutor: `delete t<INDEX>`
+* Delete student: `delete s<INDEX>`
+* Deletes the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed tutor/student list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+* `delete t1` deletes the 1st tutor in the tutor list.
+* `delete s2` deletes the 2nd student in the student list.
 
 ### Clearing all entries : `clear`
 
-Clears all entries from the address book.
+Clears all entries from the ConnectEd.
 
 Format: `clear`
 
@@ -156,15 +185,15 @@ Format: `exit`
 
 ### Saving the data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+ConnectEd data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Editing the data file
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+ConnectEd data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file makes its format invalid, ConnectEd will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause the ConnectEd to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
 ### Archiving data files `[coming in v2.0]`
@@ -194,7 +223,7 @@ Action | Format, Examples
 **Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List** | `list`
+**Find** | `find <tutor/student> /<field> <filter_value>`<br> e.g., `find student /s chinese`
+**Match/Unmatch** | `match t<INDEX> s<INDEX> / unmatch t<INDEX> or s<INDEX> `<br> e.g., `match t1 s2 / unmatch t1`
+**List** | `list students / list tutors`
 **Help** | `help`

@@ -209,10 +209,74 @@ The following sequence diagram shows how a find operation goes through the `Logi
     * Cons: Confusing user experience - unclear whether search executed successfully or was ignored.
 
 
-### \[Proposed\] Data archiving
+### \[Proposed\] Match/Unmatch Feature
 
-_{Explain here how the data archiving feature will be implemented}_
+#### Proposed Implementation
 
+The proposed match/unmatch mechanism is facilitated by `MatchCommand` and `UnmatchCommand`. It establishes or removes bidirectional references between a tutor and a student, ensuring one-to-one matching relationships.
+
+* `MatchCommand#execute()` — Creates a bidirectional match between a tutor and student, updating both entities.
+* `UnmatchCommand#execute()` — Removes the bidirectional match between a tutor and student.
+* `MatchCommandParser#parse()` — Parses and validates user input to create a valid `MatchCommand` with tutor and student indices.
+* `UnmatchCommandParser#parse()` — Parses user input to create a valid UnmatchCommand with either tutor or student index.
+
+These operations interact with the `Model` interface through `Model#matchTutorStudent()` and `Model#unmatchTutorStudent()` to maintain referential integrity.
+
+Given below is an example usage scenario and how the match/unmatch mechanism behaves at each step.
+
+Step 1. The user launches the application. The application displays a unified list containing both tutors and students, none of which are matched initially.
+![UndoRedoState0](images/UndoRedoState0.png)
+
+Step 2. The user executes `match t1 s2` command to match the first tutor with the second student. The `MatchCommandParser` validates the input, checks that both indices are valid and visible in the current filtered list, and creates a `MatchCommand`. The command executes and calls `Model#matchTutorStudent()`, which:
+* Verifies neither tutor nor student is already matched to someone else
+* Creates bidirectional references between the tutor and student
+* Updates the GUI to display the match information in both entities' profiles
+![UndoRedoState1](images/FindState1.png)
+
+![UndoRedoState2](images/UndoRedoState2.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** If a match command fails validation or execution (e.g., invalid index, entity already matched), the command will not modify any state. The user will see an appropriate error message.
+
+
+</div>
+
+Step 3. The user realizes the match was incorrect and executes `unmatch t1` to remove the match. The `UnmatchCommandParser` validates the input and creates an `UnmatchCommand`. The command executes and calls `Model#unmatchTutorStudent()`, which:
+* Retrieves the matched pair from the specified entity
+* Removes bidirectional references from both tutor and student
+* Updates the GUI to remove match information from both profiles
+
+Step 4. The user executes `match t1 s1` to create a new match. Since both entities are now unmatched, the operation succeeds and establishes the new bidirectional relationship.
+
+The following sequence diagram shows how a find operation goes through the `Logic` component:
+
+![FindSequenceDiagram](images/FindSequenceDiagram-Logic.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `MatchCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+
+
+</div>
+
+#### Design considerations:
+
+**Aspect: One-to-one vs one-to-many matching:**
+
+* **Alternative 1 (current choice):** One-to-one matching (each tutor can only match with one student and vice versa).
+    * Pros: Simple to implement and understand. Prevents ambiguity in match status. Easier to maintain referential integrity. Reflects real-world tuition arrangements where one tutor typically has dedicated time slots for specific students.
+    * Cons: Less flexible if a tutor wants to teach multiple students simultaneously. Requires unmatch before creating new match.
+
+* **Alternative 2:** One-to-many matching (tutors can match with multiple students).
+    * Pros: More flexible for tutors who teach group sessions. Better reflects scenarios where one tutor handles multiple students.
+    * Cons: Significantly more complex implementation. Harder to maintain data consistency. More complex UI to display multiple matches. Deletion becomes more complicated (need to handle cascading unmatches).
+
+**Aspect: How to handle already-matched entities:**
+
+* **Alternative 1 (current choice):** Reject and require explicit unmatch first.
+    * Pros: Prevents accidental overwriting of matches. Forces user to consciously remove existing match. Clearer audit trail of operations. Prevents data loss.
+    * Cons: Requires two commands to reassign a match (unmatch then match).
+
+* **Alternative 2:** Automatically unmatch and rematch in one command.
+    * Pros: More convenient for users - single command to reassign. Fewer steps for common operation.
+    * Cons: Risk of accidental match reassignment. Harder to undo mistakes. Less transparent to user what happened to previous match. Could cause confusion.
 
 --------------------------------------------------------------------------------------------------------------------
 

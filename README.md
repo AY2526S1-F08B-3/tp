@@ -1,5 +1,4 @@
-[![codecov](https://codecov.io/gh/AY2526S1-F08B-3/tp/graph/badge.svg?token=ZHVF07EMGS)](https://codecov.io/gh/AY2526S1-F08B-3/tp)
-
+[![codecov](https://codecov.io/gh/AY2526S1-CS2103T-F08b-3/tp/graph/badge.svg?token=ZHVF07EMGS)](https://codecov.io/gh/AY2526S1-CS2103T-F08b-3/tp)
 ![Ui](docs/images/Ui.png)
 
 * This is **a sample project for Software Engineering (SE) students**.<br>

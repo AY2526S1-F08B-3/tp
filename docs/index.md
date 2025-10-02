@@ -1,6 +1,6 @@
 ---
 layout: page
-title: AddressBook Level-3
+title: ConnectEd
 ---
 
 [![CI Status](https://github.com/se-edu/addressbook-level3/workflows/Java%20CI/badge.svg)](https://github.com/se-edu/addressbook-level3/actions)
@@ -8,7 +8,9 @@ title: AddressBook Level-3
 
 ![Ui](images/Ui.png)
 
-**AddressBook is a desktop application for managing your contact details.** While it has a GUI, most of the user interactions happen using a CLI (Command Line Interface).
+**ConnectEd is a desktop application for connecting students and tutors. We provide a one stop solution for tuition agencies to manage their database of the contacts of the students and tutors, allowing more efficient tutor-student matching.** 
+
+While it has a GUI, most of the user interactions happen using a CLI (Command Line Interface).
 
 * If you are interested in using AddressBook, head over to the [_Quick Start_ section of the **User Guide**](UserGuide.html#quick-start).
 * If you are interested about developing AddressBook, the [**Developer Guide**](DeveloperGuide.html) is a good place to start.
@@ -16,4 +18,5 @@ title: AddressBook Level-3
 
 **Acknowledgements**
 
+* This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
 * Libraries used: [JavaFX](https://openjfx.io/), [Jackson](https://github.com/FasterXML/jackson), [JUnit5](https://github.com/junit-team/junit5)

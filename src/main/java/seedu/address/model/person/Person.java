@@ -20,20 +20,31 @@ public class Person {
     private final Name name;
     private final Phone phone;
     private final Email email;
+    private boolean isTutor = false;
+    private boolean isStudent = false;
 
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
+    private Person matchedPerson;
+    private Subject subject;
+    private Level level;
+    private Price price;
+    private boolean isMatched = false;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Subject subject, Level level, Price price,
+                   Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, subject, level, price, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.subject = subject;
+        this.level = level;
+        this.price = price;
         this.tags.addAll(tags);
     }
 
@@ -51,6 +62,65 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
+    }
+
+    public Price getPrice() {
+        return price;
+    }
+
+    public void setPrice(Price price) {
+        this.price = price;
+    }
+
+    public boolean getMatchedStatus() {
+        return this.isMatched;
+    }
+
+    public void setTutor() {
+        this.isTutor = true;
+    }
+
+    public void setStudent() {
+        this.isStudent = true;
+    }
+
+    public boolean isTutor() {
+        return isTutor;
+    }
+
+    public boolean isStudent() {
+        return isStudent;
+    }
+
+    public void setMatchedPerson(Person person) {
+        this.matchedPerson = person;
+    }
+
+    public void matchPerson(Person person) {
+        if (this.isMatched || person.getMatchedStatus()) {
+            return;
+        } else if (isTutor ^ person.isTutor() ) {
+            this.matchedPerson = person;
+            person.setMatchedPerson(this);
+        } else {
+            return;
+        }
     }
 
     /**
@@ -113,4 +183,6 @@ public class Person {
                 .add("tags", tags)
                 .toString();
     }
+
 }
+

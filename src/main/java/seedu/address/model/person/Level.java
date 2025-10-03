@@ -29,8 +29,12 @@ public class Level {
     public static boolean isValidLevel(String test) {
         return test.matches(VALIDATION_REGEX);
     }
-
-    /** Accepts "3", "03", "3-3", "1-6" (spaces allowed around '-'). */
+    /**
+     * Calls the constructor when passed in a string.
+     * Accepts "3", "03", "3-3", "1-6" (spaces allowed around '-').
+     * @param text Inputted String to call the constructor.
+     * @return A new Price Object.
+     */
     public static Level parse(String text) {
         requireNonNull(text);
         String s = text.trim();
@@ -48,12 +52,19 @@ public class Level {
         }
         throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
     }
-
-    /** True if this range covers the other (e.g., tutor covers student). */
+    /**
+     * Checks if the range of Level covers the other Level.
+     * @param other The other level object.
+     * @returnTrue if this range covers the other (e.g., tutor covers student).
+     */
     public boolean includes(Level other) {
         return this.start <= other.start && this.end >= other.end;
     }
 
+    /**
+     * Check if the Level value is a single value (mainly for students).
+     * @return true if it is a single value.
+     */
     public boolean isSingle() {
         return start == end;
     }

@@ -16,6 +16,9 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.person.Subject;
+import seedu.address.model.person.Level;
+import seedu.address.model.person.Price;
 
 /**
  * Jackson-friendly version of {@link Person}.
@@ -29,6 +32,9 @@ class JsonAdaptedPerson {
     private final String email;
     private final String address;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final String subject;
+    private final String level;
+    private final String price;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -36,7 +42,8 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("subject")) String subject,
+            @JsonProperty("level") String level, @JsonProperty("price") String price) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -44,6 +51,9 @@ class JsonAdaptedPerson {
         if (tags != null) {
             this.tags.addAll(tags);
         }
+        this.subject = subject;
+        this.level = level;
+        this.price = price;
     }
 
     /**
@@ -57,6 +67,9 @@ class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+        subject = source.getSubject().value;
+        level = source.getLevel().value;
+        price = source.getPrice().value;
     }
 
     /**
@@ -103,7 +116,33 @@ class JsonAdaptedPerson {
         final Address modelAddress = new Address(address);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags);
+
+        if (subject == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Subject.class.getSimpleName()));
+        }
+        if (!Subject.isValidSubject(subject)) {
+            throw new IllegalValueException(Subject.MESSAGE_CONSTRAINTS);
+        }
+        final Subject modelSubject = new Subject(subject);
+
+        if (level == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Level.class.getSimpleName()));
+        }
+        if (!Level.isValidLevel(level)) {
+            throw new IllegalValueException(Level.MESSAGE_CONSTRAINTS);
+        }
+        final Level modelLevel = new Level(level);
+
+        if (price == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Price.class.getSimpleName()));
+        }
+        if (!Price.isValidPrice(price)) {
+            throw new IllegalValueException(Price.MESSAGE_CONSTRAINTS);
+        }
+        final Price modelPrice = new Price(price);
+
+        return new Person(modelName, modelPhone, modelEmail, modelAddress,
+                modelTags, modelSubject, modelLevel, modelPrice);
     }
 
 }

@@ -7,6 +7,9 @@ import java.util.Set;
 public class Tutor extends Person{
 
     private Student matchedStudent;
+    private Subject subject;
+    private Level level;
+    private Price price;
 
     /**
      * Every field must be present and not null.
@@ -15,12 +18,43 @@ public class Tutor extends Person{
      * @param phone
      * @param email
      * @param address
+     * @param subject
+     * @param level
+     * @param price
      * @param tags
      */
-    public Tutor(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Subject subject, Level level,
-                   Price price ) {
-        super(name, phone, email, address, tags, subject, level, price);
+    public Tutor(Name name, Phone phone, Email email, Address address, Subject subject, Level level, Price price,
+                 Set<Tag> tags) {
+        super(name, phone, email, address, tags);
+        this.subject = subject;
+        this.level = level;
+        this.price = price;
     }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
+    }
+
+    public Price getPrice() {
+        return price;
+    }
+
+    public void setPrice(Price price) {
+        this.price = price;
+    }
+
 
     /**
      * Sets the matched student for this object.

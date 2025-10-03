@@ -10,8 +10,6 @@ import java.util.Set;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
 
-import javax.security.auth.Subject;
-
 /**
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
@@ -26,25 +24,17 @@ public class Person {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
-    private Subject subject;
-    private Level level;
-    private Price price;
-    private boolean isMatched = false;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Subject subject, Level level,
-                  Price price) {
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
-        this.subject = subject;
-        this.level = level;
-        this.price = price;
     }
 
     public Name getName() {
@@ -71,18 +61,6 @@ public class Person {
         return Collections.unmodifiableSet(tags);
     }
 
-    public Subject getSubject() {
-        return subject;
-    }
-
-    public Level getLevel() {
-        return level;
-    }
-
-    public Price getPrice() {
-        return price;
-    }
-
     /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
@@ -94,28 +72,6 @@ public class Person {
 
         return otherPerson != null
                 && otherPerson.getName().equals(getName());
-    }
-
-    /**
-     * Marks this object as matched.
-     * <p>
-     * Calling this method will set the {@code isMatched} flag to {@code true}.
-     * It is typically used when the object has been successfully paired or
-     * linked with another entity.
-     */
-    public void match() {
-        this.isMatched = true;
-    }
-
-    /**
-     * Marks this object as unmatched.
-     * <p>
-     * Calling this method will set the {@code isMatched} flag to {@code false}.
-     * It is typically used when the object is no longer paired or
-     * linked with another entity.
-     */
-    public void unmatch() {
-        this.isMatched = false;
     }
 
     /**
@@ -138,17 +94,13 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
-                && subject.equals(otherPerson.subject)
-                && level.equals(otherPerson.level)
-                && price.equals(otherPerson.price)
                 && tags.equals(otherPerson.tags);
-
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, subject, level, price, tags);
+        return Objects.hash(name, phone, email, address, tags);
     }
 
     @Override
@@ -158,10 +110,8 @@ public class Person {
                 .add("phone", phone)
                 .add("email", email)
                 .add("address", address)
-                .add("subject", subject)
-                .add("level", level)
-                .add("price", price)
                 .add("tags", tags)
                 .toString();
     }
+
 }

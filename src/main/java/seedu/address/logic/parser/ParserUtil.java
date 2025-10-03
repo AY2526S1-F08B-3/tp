@@ -13,6 +13,9 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Subject;
+import seedu.address.model.person.Level;
+import seedu.address.model.person.Price;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -107,19 +110,21 @@ public class ParserUtil {
     public static Level parseLevel(String level) throws ParseException {
         requireNonNull(level);
         String trimmedLevel = level.trim();
-        if (!Level.isValidLevel(trimmedLevel)) {
-            throw new ParseException(Level.MESSAGE_CONSTRAINTS);
-        }
-        return new Level(trimmedLevel);
+        return Level.parse(trimmedLevel);
+//        if (!Level.isValidLevel(trimmedLevel)) {
+//            throw new ParseException(Level.MESSAGE_CONSTRAINTS);
+//        }
+//        return new Level(trimmedLevel);
     }
 
     public static Price parsePrice(String price) throws ParseException {
         requireNonNull(price);
         String trimmedPrice = price.trim();
-        if (!Price.isValidPrice(trimmedPrice)) {
-            throw new ParseException(Price.MESSAGE_CONSTRAINTS);
-        }
-        return new Price(trimmedPrice);
+        return Price.parse(trimmedPrice);
+//        if (!Price.isValidPrice(trimmedPrice)) {
+//            throw new ParseException(Price.MESSAGE_CONSTRAINTS);
+//        }
+//        return new Price(trimmedPrice);
     }
 
     /**

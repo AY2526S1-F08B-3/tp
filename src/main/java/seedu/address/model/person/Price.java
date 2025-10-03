@@ -3,7 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 
 /**
- * Represents an hourly rate (in integer dollars) as either a single value or a range [min..max], inclusive.
+ * Represents an hourly rate (in integer dollars) as either a single value or a range [min-max], inclusive.
  * Examples: "35", "30-45".
  */
 public class Price {
@@ -14,6 +14,11 @@ public class Price {
     private final int min; // inclusive
     private final int max; // inclusive
 
+    /**
+     * Constructs a Price object.
+     * @param min A valid min of the price range.
+     * @param max A valid max of the price range.
+     */
     public Price(int min, int max) {
         if (min < 0 || max < 0 || min > max) {
             throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
@@ -22,12 +27,21 @@ public class Price {
         this.max = max;
     }
 
+    /**
+     * Returns true if the given price string is valid.
+     * @param test String inputted.
+     * @return boolean.
+     */
     public static boolean isValidPrice(String test) {
         return test.matches(VALIDATION_REGEX);
     }
 
-
-    /** Accepts "35", "035", "35-35", "30-45" (spaces allowed around '-') */
+    /**
+     *  * Calls the constructor when passed in a string.
+     * Accepts "35", "035", "35-35", "30-45" (spaces allowed around '-')
+     * @param text Inputted String to call the constructor.
+     * @return A new Price Object.
+     */
     public static Price parse(String text) {
         requireNonNull(text);
         String s = text.trim();
@@ -43,33 +57,52 @@ public class Price {
         }
         throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
     }
-
-    /** True if this price range fully covers the other. Useful for checking budget ⊆ tutor price range, etc. */
+    /**
+     * Checks if price range fully cover the other.
+     * Useful for checking budget ⊆ tutor price range, etc.
+     * @param other Another Price object to compare to.
+     * @return True if this price range fully covers the other.
+     */
     public boolean includes(Price other) {
         return this.min <= other.min && this.max >= other.max;
     }
-
-    /** True if the ranges intersect at all. Useful for quick compatibility checks. */
+    /**
+     * Check if price range intersects.
+     * Useful for quick compatibility checks.
+     * @param other Another Price object to compare to.
+     * @return True if the ranges intersect at all.
+     */
     public boolean overlaps(Price other) {
         return this.min <= other.max && other.min <= this.max;
     }
-
-    /** True if a single value falls within this range. */
+    /**
+     * Check if a value is within the price range.
+     * @param value Value to check.
+     * @return True if a single value falls within this range.
+     */
     public boolean includesSingle(int value) {
         return value >= min && value <= max;
     }
-
-    public boolean isSingle() { return min == max; }
-
+    public boolean isSingle() {
+        return min == max;
+    }
     @Override public String toString() {
         return isSingle() ? Integer.toString(min) : (min + "-" + max);
     }
 
-    @Override public int hashCode() { return 31 * min + max; }
+    @Override public int hashCode() {
+        return 31 * min + max;
+    }
+
     @Override public boolean equals(Object o) {
-        if (o == this) return true;
-        if (!(o instanceof Price)) return false;
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Price)) {
+            return false;
+        }
         Price other = (Price) o;
         return this.min == other.min && this.max == other.max;
     }
 }
+

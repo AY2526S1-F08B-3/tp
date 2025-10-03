@@ -112,10 +112,21 @@ public class Person {
         this.matchedPerson = person;
     }
 
+    /**
+     * Attempts to match this person with another person.
+     *
+     * Rules:
+     * - If either person is already matched, do nothing.
+     * - A match is created only if one is a tutor and the other is a student.
+     * - When matched, both persons update their matchedPerson reference to each other.
+     * - If conditions are not met, do nothing.
+     *
+     * @param person the other Person to attempt matching with
+     */
     public void matchPerson(Person person) {
         if (this.isMatched || person.getMatchedStatus()) {
             return;
-        } else if (isTutor ^ person.isTutor() ) {
+        } else if (isTutor ^ person.isTutor()) {
             this.matchedPerson = person;
             person.setMatchedPerson(this);
         } else {

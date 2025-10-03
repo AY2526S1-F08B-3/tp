@@ -69,7 +69,7 @@ public class LogicManagerTest {
         String listCommand = ListCommand.COMMAND_WORD + " tutors";
         assertCommandSuccess(listCommand, ListCommand.MESSAGE_SUCCESS_TUTORS, model);
     }
-    
+
     @Test
     public void execute_storageThrowsIoException_throwsCommandException() {
         assertCommandFailureForExceptionFromStorage(DUMMY_IO_EXCEPTION, String.format(

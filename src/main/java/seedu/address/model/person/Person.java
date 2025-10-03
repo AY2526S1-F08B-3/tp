@@ -126,7 +126,7 @@ public class Person {
     public void matchPerson(Person person) {
         if (this.isMatched || person.getMatchedStatus()) {
             return;
-        } else if (isTutor ^ person.isTutor() ) {
+        } else if (isTutor ^ person.isTutor()) {
             this.matchedPerson = person;
             person.setMatchedPerson(this);
         } else {

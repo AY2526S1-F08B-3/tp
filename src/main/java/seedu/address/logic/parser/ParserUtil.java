@@ -95,6 +95,33 @@ public class ParserUtil {
         return new Email(trimmedEmail);
     }
 
+    public static Subject parseSubject(String subject) throws ParseException {
+        requireNonNull(subject);
+        String trimmedSubject = subject.trim();
+        if (!Subject.isValidEmail(trimmedSubject)) {
+            throw new ParseException(Subject.MESSAGE_CONSTRAINTS);
+        }
+        return new Subject(trimmedSubject);
+    }
+
+    public static Level parseSubject(String subject) throws ParseException {
+        requireNonNull(subject);
+        String trimmedSubject = subject.trim();
+        if (!Level.isValidEmail(trimmedSubject)) {
+            throw new ParseException(Level.MESSAGE_CONSTRAINTS);
+        }
+        return new Level(trimmedSubject);
+    }
+
+    public static Price parseSubject(String subject) throws ParseException {
+        requireNonNull(subject);
+        String trimmedSubject = subject.trim();
+        if (!Price.isValidEmail(trimmedSubject)) {
+            throw new ParseException(Price.MESSAGE_CONSTRAINTS);
+        }
+        return new Price(trimmedSubject);
+    }
+
     /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.

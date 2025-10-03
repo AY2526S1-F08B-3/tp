@@ -73,3 +73,4 @@ public class Price {
         return this.min == other.min && this.max == other.max;
     }
 }
+

@@ -9,6 +9,7 @@ import static java.util.Objects.requireNonNull;
 public class Price {
     public static final String MESSAGE_CONSTRAINTS =
             "Price must be a non-negative integer or a range min-max (e.g., 35 or 30-45) with min <= max.";
+    public static final String VALIDATION_REGEX = "\\d+|\\d+\\s*-\\s*\\d+";
 
     private final int min; // inclusive
     private final int max; // inclusive
@@ -20,6 +21,11 @@ public class Price {
         this.min = min;
         this.max = max;
     }
+
+    public static boolean isValidPrice(String test) {
+        return test.matches(VALIDATION_REGEX);
+    }
+
 
     /** Accepts "35", "035", "35-35", "30-45" (spaces allowed around '-') */
     public static Price parse(String text) {

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 public class Subject {
     public static final String MESSAGE_CONSTRAINTS = "Subject cannot be blank.";
+    public static final String VALIDATION_REGEX = "[A-Za-z ]+";
     public final String subject;
 
     public Subject(String subject) {
@@ -14,6 +15,11 @@ public class Subject {
         }
         this.subject = s;
     }
+
+    public static boolean isValidSubject(String test) {
+        return test.matches(VALIDATION_REGEX);
+    }
+
 
     @Override public String toString() { return subject; }
     @Override public int hashCode() { return subject.hashCode(); }

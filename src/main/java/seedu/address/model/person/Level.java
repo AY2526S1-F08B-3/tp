@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 public class Level {
     public static final String MESSAGE_CONSTRAINTS =
             "Level must be a positive integer or a range start-end (e.g., 3 or 1-6) with start <= end.";
+    public static final String VALIDATION_REGEX = "\\d+|\\d+\\s*-\\s*\\d+";
 
     private final int start; // inclusive
     private final int end;   // inclusive
@@ -15,6 +16,10 @@ public class Level {
         }
         this.start = start;
         this.end = end;
+    }
+
+    public static boolean isValidLevel(String test) {
+        return test.matches(VALIDATION_REGEX);
     }
 
     /** Accepts "3", "03", "3-3", "1-6" (spaces allowed around '-'). */

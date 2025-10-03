@@ -98,28 +98,28 @@ public class ParserUtil {
     public static Subject parseSubject(String subject) throws ParseException {
         requireNonNull(subject);
         String trimmedSubject = subject.trim();
-        if (!Subject.isValidEmail(trimmedSubject)) {
+        if (!Subject.isValidSubject(trimmedSubject)) {
             throw new ParseException(Subject.MESSAGE_CONSTRAINTS);
         }
         return new Subject(trimmedSubject);
     }
 
-    public static Level parseSubject(String subject) throws ParseException {
-        requireNonNull(subject);
-        String trimmedSubject = subject.trim();
-        if (!Level.isValidEmail(trimmedSubject)) {
+    public static Level parseLevel(String level) throws ParseException {
+        requireNonNull(level);
+        String trimmedLevel = level.trim();
+        if (!Level.isValidLevel(trimmedLevel)) {
             throw new ParseException(Level.MESSAGE_CONSTRAINTS);
         }
-        return new Level(trimmedSubject);
+        return new Level(trimmedLevel);
     }
 
-    public static Price parseSubject(String subject) throws ParseException {
-        requireNonNull(subject);
-        String trimmedSubject = subject.trim();
-        if (!Price.isValidEmail(trimmedSubject)) {
+    public static Price parsePrice(String price) throws ParseException {
+        requireNonNull(price);
+        String trimmedPrice = price.trim();
+        if (!Price.isValidPrice(trimmedPrice)) {
             throw new ParseException(Price.MESSAGE_CONSTRAINTS);
         }
-        return new Price(trimmedSubject);
+        return new Price(trimmedPrice);
     }
 
     /**

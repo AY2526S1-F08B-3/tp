@@ -42,18 +42,18 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("subject")) String subject,
-            @JsonProperty("level") String level, @JsonProperty("price") String price) {
+            @JsonProperty("subject") String subject, @JsonProperty("level") String level,
+            @JsonProperty("price") String price, @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        if (tags != null) {
-            this.tags.addAll(tags);
-        }
         this.subject = subject;
         this.level = level;
         this.price = price;
+        if (tags != null) {
+            this.tags.addAll(tags);
+        }
     }
 
     /**
@@ -64,12 +64,12 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        tags.addAll(source.getTags().stream()
-                .map(JsonAdaptedTag::new)
-                .collect(Collectors.toList()));
         subject = source.getSubject().value;
         level = source.getLevel().value;
         price = source.getPrice().value;
+        tags.addAll(source.getTags().stream()
+                .map(JsonAdaptedTag::new)
+                .collect(Collectors.toList()));
     }
 
     /**
@@ -115,8 +115,6 @@ class JsonAdaptedPerson {
         }
         final Address modelAddress = new Address(address);
 
-        final Set<Tag> modelTags = new HashSet<>(personTags);
-
         if (subject == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Subject.class.getSimpleName()));
         }
@@ -141,8 +139,10 @@ class JsonAdaptedPerson {
         }
         final Price modelPrice = new Price(price);
 
+        final Set<Tag> modelTags = new HashSet<>(personTags);
+
         return new Person(modelName, modelPhone, modelEmail, modelAddress,
-                modelTags, modelSubject, modelLevel, modelPrice);
+                modelSubject, modelLevel, modelPrice, modelTags);
     }
 
 }

@@ -1,10 +1,21 @@
 package seedu.address.model.person;
 
-import seedu.address.model.tag.Tag;
-
 import java.util.Set;
 
-public class Tutor extends Person{
+import seedu.address.model.tag.Tag;
+
+/**
+ * Represents a Tutor in the  application.
+ * <p>
+ * A Tutor is a type of {@link Person} with additional attributes
+ * relevant to tuition matching, such as subject expertise, the
+ * education levels they can teach, hourly price, and a reference
+ * to a matched student (if any).
+ * <p>
+ * Inherits all general person details (e.g., name, phone, email, address, tags)
+ * from the {@code Person} superclass.
+ */
+public class Tutor extends Person {
 
     private Student matchedStudent;
     private Subject subject;

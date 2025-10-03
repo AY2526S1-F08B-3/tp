@@ -1,10 +1,20 @@
 package seedu.address.model.person;
 
-import seedu.address.model.tag.Tag;
-
 import java.util.Set;
 
-public class Student extends Person{
+import seedu.address.model.tag.Tag;
+
+/**
+ * Represents a Student in the application.
+ * <p>
+ * A Student is a type of {@link Person} with additional attributes
+ * relevant to tuition matching, such as subject, level, price, and
+ * a reference to a matched tutor (if any).
+ * <p>
+ * Inherits all general person details (e.g., name, phone, email, address, tags)
+ * from the {@code Person} superclass.
+ */
+public class Student extends Person {
 
     private Tutor matchedTutor;
     private Subject subject;
@@ -23,8 +33,8 @@ public class Student extends Person{
      * @param price
      * @param tags
      */
-    public Student(Name name, Phone phone, Email email, Address address, Subject subject, Level level, Price price
-                   , Set<Tag> tags) {
+    public Student(Name name, Phone phone, Email email, Address address, Subject subject, Level level, Price price,
+                   Set<Tag> tags) {
         super(name, phone, email, address, tags);
         this.subject = subject;
         this.level = level;

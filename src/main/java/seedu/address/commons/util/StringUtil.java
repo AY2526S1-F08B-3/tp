@@ -65,4 +65,16 @@ public class StringUtil {
             return false;
         }
     }
+
+    /**
+     * Returns true if {@code s} represents a valid role
+     * e.g. "tutors"/ "students"  <br>
+     * Will return false for any other invalid string input
+     * e.g. empty string, "tutor", "student", and " tutor " (untrimmed), "stu dent" (contains whitespace)
+     * @throws NullPointerException if {@code s} is null.
+     */
+    public static boolean isValidRole(String s) {
+        requireNonNull(s);
+        return s.equals("tutors") || s.equals("students");
+    }
 }

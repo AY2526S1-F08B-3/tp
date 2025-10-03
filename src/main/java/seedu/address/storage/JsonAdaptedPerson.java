@@ -129,7 +129,7 @@ class JsonAdaptedPerson {
         if (!Level.isValidLevel(level)) {
             throw new IllegalValueException(Level.MESSAGE_CONSTRAINTS);
         }
-        final Level modelLevel = new Level(level);
+        final Level modelLevel = Level.parse(level);
 
         if (price == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Price.class.getSimpleName()));
@@ -137,7 +137,7 @@ class JsonAdaptedPerson {
         if (!Price.isValidPrice(price)) {
             throw new IllegalValueException(Price.MESSAGE_CONSTRAINTS);
         }
-        final Price modelPrice = new Price(price);
+        final Price modelPrice = Price.parse(price);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
 

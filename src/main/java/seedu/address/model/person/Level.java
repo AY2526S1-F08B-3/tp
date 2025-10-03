@@ -2,14 +2,22 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * Represents a Level or a range of Levels for a Person.
+ */
 public class Level {
     public static final String MESSAGE_CONSTRAINTS =
             "Level must be a positive integer or a range start-end (e.g., 3 or 1-6) with start <= end.";
     public static final String VALIDATION_REGEX = "\\d+|\\d+\\s*-\\s*\\d+";
 
     private final int start; // inclusive
-    private final int end;   // inclusive
+    private final int end; // inclusive
 
+    /**
+     * Constructs a Level object with the given min and max values.
+     * @param start inclusive start of the level range.
+     * @param end inclusive end of the level range.
+     */
     public Level(int start, int end) {
         if (start <= 0 || end <= 0 || start > end) {
             throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
@@ -46,17 +54,25 @@ public class Level {
         return this.start <= other.start && this.end >= other.end;
     }
 
-    public boolean isSingle() { return start == end; }
+    public boolean isSingle() {
+        return start == end;
+    }
 
     /** Store compactly: "3" if single, else "1-6". */
     @Override public String toString() {
         return isSingle() ? Integer.toString(start) : (start + "-" + end);
     }
 
-    @Override public int hashCode() { return 31 * start + end; }
+    @Override public int hashCode() {
+        return 31 * start + end;
+    }
     @Override public boolean equals(Object o) {
-        if (o == this) return true;
-        if (!(o instanceof Level)) return false;
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Level)) {
+            return false;
+        }
         Level other = (Level) o;
         return start == other.start && end == other.end;
     }

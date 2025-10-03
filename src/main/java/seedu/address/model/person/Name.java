@@ -32,7 +32,7 @@ public class Name {
     }
 
     /**
-     * Returns true if a given string is a valid name.
+     * Returns true if a given string is a va lid name.
      */
     public static boolean isValidName(String test) {
         return test.matches(VALIDATION_REGEX);

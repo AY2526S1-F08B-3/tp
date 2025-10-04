@@ -1,14 +1,26 @@
 {
-  "persons": [ {
-    "name": "Alice Pauline",
-    "phone": "94351253",
-    "email": "alice@example.com",
-    "address": "123, Jurong West Ave 6, #08-111",
-    "tags": [ "friends" ]
-  }, {
-    "name": "Alice Pauline",
-    "phone": "94351253",
-    "email": "pauline@example.com",
-    "address": "4th street"
-  } ]
+  "persons": [
+    {
+      "role": "tutor",
+      "name": "Alice Pauline",
+      "phone": "94351253",
+      "email": "alice@example.com",
+      "address": "123, Jurong West Ave 6, #08-111",
+      "subject": "science",
+      "level": "3",
+      "price": "20-30",
+      "tags": [ "friends" ]
+    },
+    {
+      "role": "student",
+      "name": "Alice Pauline",
+      "phone": "94351253",
+      "email": "pauline@example.com",
+      "address": "4th street",
+      "subject": "science",
+      "level": "3",
+      "price": "20-30",
+      "tags": []
+    }
+  ]
 }

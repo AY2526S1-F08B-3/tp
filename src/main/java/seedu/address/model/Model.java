@@ -14,6 +14,12 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    /** {@code Predicate} that evaluates to true if Person is a tutor */
+    Predicate<Person> PREDICATE_SHOW_ALL_TUTORS = Person::isTutor;
+
+    /** {@code Predicate} that evaluates to true if Person is a student */
+    Predicate<Person> PREDICATE_SHOW_ALL_STUDENTS = Person::isStudent;
+
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
      */

@@ -1,8 +1,8 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+//import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+//import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -27,13 +27,16 @@ public class ListCommandTest {
     }
 
     @Test
-    public void execute_listIsNotFiltered_showsSameList() {
-        assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+    public void execute_listIsFiltered_showsTutors() {
+        ListCommand listTutorsCommand = new ListCommand("tutors");
+        expectedModel.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_TUTORS);
+        assertCommandSuccess(listTutorsCommand, model, ListCommand.MESSAGE_SUCCESS_TUTORS, expectedModel);
     }
 
     @Test
-    public void execute_listIsFiltered_showsEverything() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-        assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+    public void execute_listIsFiltered_showsStudents() {
+        ListCommand listStudentsCommand = new ListCommand("students");
+        expectedModel.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_STUDENTS);
+        assertCommandSuccess(listStudentsCommand, model, ListCommand.MESSAGE_SUCCESS_STUDENTS, expectedModel);
     }
 }

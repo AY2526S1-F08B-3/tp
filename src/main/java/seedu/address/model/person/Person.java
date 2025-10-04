@@ -35,8 +35,8 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Subject subject, Level level, Price price,
-                   Set<Tag> tags) {
+    public Person(String role, Name name, Phone phone, Email email, Address address,
+                  Subject subject, Level level, Price price, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, subject, level, price, tags);
         this.name = name;
         this.phone = phone;
@@ -46,6 +46,18 @@ public class Person {
         this.level = level;
         this.price = price;
         this.tags.addAll(tags);
+        if (role.equals("tutor")) {
+            this.isTutor = true;
+        } else {
+            this.isStudent = true;
+        }
+    }
+
+    public String getRole() {
+        if (isTutor) {
+            return "tutor";
+        }
+        return "student";
     }
 
     public Name getName() {
@@ -114,7 +126,6 @@ public class Person {
 
     /**
      * Attempts to match this person with another person.
-     *
      * Rules:
      * - If either person is already matched, do nothing.
      * - A match is created only if one is a tutor and the other is a student.

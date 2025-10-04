@@ -23,7 +23,12 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_ROLE = "student";
+    public static final String DEFAULT_SUBJECT = "science";
+    public static final String DEFAULT_LEVEL = "1-2";
+    public static final String DEFAULT_PRICE = "30-40";
 
+    private String role;
     private Name name;
     private Phone phone;
     private Email email;
@@ -37,10 +42,14 @@ public class PersonBuilder {
      * Creates a {@code PersonBuilder} with the default details.
      */
     public PersonBuilder() {
+        role = DEFAULT_ROLE;
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
+        subject = new Subject(DEFAULT_SUBJECT);
+        level = Level.parse(DEFAULT_LEVEL);
+        price = Price.parse(DEFAULT_PRICE);
         tags = new HashSet<>();
     }
 
@@ -48,12 +57,17 @@ public class PersonBuilder {
      * Initializes the PersonBuilder with the data of {@code personToCopy}.
      */
     public PersonBuilder(Person personToCopy) {
+        role = personToCopy.getRole();
         name = personToCopy.getName();
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
+        subject = personToCopy.getSubject();
+        level = personToCopy.getLevel();
+        price = personToCopy.getPrice();
         tags = new HashSet<>(personToCopy.getTags());
     }
+
 
     /**
      * Sets the {@code Name} of the {@code Person} that we are building.
@@ -119,8 +133,16 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Price} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withRole(String role) {
+        this.role = role;
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, subject, level, price, tags);
+        return new Person(role, name, phone, email, address, subject, level, price, tags);
     }
 
 }

@@ -77,4 +77,17 @@ public class StringUtil {
         requireNonNull(s);
         return s.equals("tutors") || s.equals("students");
     }
+
+    /**
+     * Returns true if {@code s} represents a valid individual role
+     * e.g. "tutor"/ "student"  <br>
+     * Will return false for any other invalid string input
+     * e.g. empty string, "tutors", "students", and " tutor " (untrimmed), "stu dent" (contains whitespace)
+     * @throws NullPointerException if {@code s} is null.
+     */
+    public static boolean isValidIndivRole(String s) {
+        requireNonNull(s);
+        return s.equals("tutor") || s.equals("student");
+    }
+
 }

@@ -104,6 +104,7 @@ public class EditCommand extends Command {
     private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
 
+        String updatedRole = editPersonDescriptor.getRole().orElse(personToEdit.getRole());
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
@@ -113,7 +114,7 @@ public class EditCommand extends Command {
         Price updatedPrice = editPersonDescriptor.getPrice().orElse(personToEdit.getPrice());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedSubject,
+        return new Person(updatedRole, updatedName, updatedPhone, updatedEmail, updatedAddress, updatedSubject,
                 updatedLevel, updatedPrice, updatedTags);
     }
 
@@ -146,6 +147,7 @@ public class EditCommand extends Command {
      * corresponding field value of the person.
      */
     public static class EditPersonDescriptor {
+        private String role;
         private Name name;
         private Phone phone;
         private Email email;
@@ -162,6 +164,7 @@ public class EditCommand extends Command {
          * A defensive copy of {@code tags} is used internally.
          */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
+            setRole(toCopy.role);
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
@@ -177,6 +180,14 @@ public class EditCommand extends Command {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+        }
+
+        public void setRole(String role) {
+            this.role = role;
+        }
+
+        public Optional<String> getRole() {
+            return Optional.ofNullable(role);
         }
 
         public void setName(Name name) {
@@ -274,6 +285,7 @@ public class EditCommand extends Command {
         @Override
         public String toString() {
             return new ToStringBuilder(this)
+                    .add("role", role)
                     .add("name", name)
                     .add("phone", phone)
                     .add("email", email)

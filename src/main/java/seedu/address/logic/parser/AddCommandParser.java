@@ -50,6 +50,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
+        String role = ParserUtil.parseIndivRole(argMultimap.getValue(PREFIX_ROLE).get());
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
@@ -59,7 +60,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Price price = ParserUtil.parsePrice(argMultimap.getValue(PREFIX_PRICE).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Person person = new Person(name, phone, email, address, subject, level, price, tagList);
+        Person person = new Person(role, name, phone, email, address, subject, level, price, tagList);
 
         return new AddCommand(person);
     }

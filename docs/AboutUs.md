@@ -36,7 +36,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](http://github.com/katrinaykt)] [[portfolio](team/katrinaykt.md)]
 
 * Role: Developer
-* Responsibilities: Data
+* Responsibilities: Code Quality
 
 ### Ray Kye
 

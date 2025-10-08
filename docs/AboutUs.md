@@ -45,7 +45,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](http://github.com/RagingRogue)]
 [[portfolio](team/ragingrogue.md)]
 
-* Role: Software Developer
+* Role: Developer
 * Responsibilities: Dev Ops + Threading
 
 ### Nicha

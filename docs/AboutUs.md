@@ -17,7 +17,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](https://github.com/tevyntan)]
 [[portfolio](team/tevyn.md)]
 
-* Role: CEO 
+* Role: Software Developer
 
 ### Jun Wei
 
@@ -35,8 +35,8 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 [[github](http://github.com/katrinaykt)] [[portfolio](team/katrinaykt.md)]
 
-* Role: Developer
-* Responsibilities: Code Quality
+* Role: CEO
+* Responsibilities: Code Structure
 
 ### Ray Kye
 

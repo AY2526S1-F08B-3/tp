@@ -23,6 +23,13 @@ public class Subject {
         this.subject = s;
     }
 
+    /**
+     * Parses the given string into a {@code Subject}.
+     *
+     * @param text the input subject string
+     * @return a {@code Subject} object
+     * @throws IllegalArgumentException if the input is invalid
+     */
     public static Subject parse(String text) {
         requireNonNull(text);
         String s = text.trim();

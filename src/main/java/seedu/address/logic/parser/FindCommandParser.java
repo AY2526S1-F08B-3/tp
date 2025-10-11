@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SUBJECT;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
@@ -80,16 +81,12 @@ public class FindCommandParser implements Parser<FindCommand> {
             List<String> subjectKeywords = argMultimap.getAllValues(PREFIX_SUBJECT).stream()
                     .flatMap(s -> Arrays.stream(s.trim().split("\\s+")))
                     .toList();
-            try {
-                List<Subject> subjects = subjectKeywords.stream()
-                        .map(Subject::parse).toList();
-                Predicate<Person> subjectPredicate =
-                        new MatchingSubjectPredicate(subjects);
-                combinedPredicate = combinedPredicate.and(subjectPredicate);
-            } catch (IllegalArgumentException e) {
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            List<Subject> subjects = new ArrayList<>();
+            for (String keyword : subjectKeywords) {
+                subjects.add(ParserUtil.parseSubject(keyword));
             }
+            Predicate<Person> subjectPredicate = new MatchingSubjectPredicate(subjects);
+            combinedPredicate = combinedPredicate.and(subjectPredicate);
         }
 
         // Level
@@ -97,14 +94,13 @@ public class FindCommandParser implements Parser<FindCommand> {
             List<String> levelStrings = argMultimap.getAllValues(PREFIX_LEVEL).stream()
                     .flatMap(s -> Arrays.stream(s.trim().split("\\s+")))
                     .toList();
-            try {
-                List<Level> levels = levelStrings.stream().map(Level::parse).toList();
-                Predicate<Person> levelPredicate = new MatchingLevelPredicate(levels);
-                combinedPredicate = combinedPredicate.and(levelPredicate);
-            } catch (IllegalArgumentException e) {
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            List<Level> levels = new ArrayList<>();
+            for (String levelString : levelStrings) {
+                levels.add(ParserUtil.parseLevel(levelString)); // throws ParseException if invalid
             }
+
+            Predicate<Person> levelPredicate = new MatchingLevelPredicate(levels);
+            combinedPredicate = combinedPredicate.and(levelPredicate);
         }
 
         // Price
@@ -112,14 +108,13 @@ public class FindCommandParser implements Parser<FindCommand> {
             List<String> priceStrings = argMultimap.getAllValues(PREFIX_PRICE).stream()
                     .flatMap(s -> Arrays.stream(s.trim().split("\\s+")))
                     .toList();
-            try {
-                List<Price> prices = priceStrings.stream().map(Price::parse).toList();
-                Predicate<Person> pricePredicate = new MatchingPricePredicate(prices);
-                combinedPredicate = combinedPredicate.and(pricePredicate);
-            } catch (IllegalArgumentException e) {
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            List<Price> prices = new ArrayList<>();
+            for (String priceString : priceStrings) {
+                prices.add(ParserUtil.parsePrice(priceString));
             }
+
+            Predicate<Person> pricePredicate = new MatchingPricePredicate(prices);
+            combinedPredicate = combinedPredicate.and(pricePredicate);
         }
         if (argMultimap.getValue(PREFIX_NAME).isEmpty()
                 && argMultimap.getValue(PREFIX_SUBJECT).isEmpty()

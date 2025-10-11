@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 /**
  * Represents a Subject object for a Person.
  */
+@SuppressWarnings("checkstyle:Regexp")
 public class Subject {
     public static final String MESSAGE_CONSTRAINTS = "Subject cannot be blank.";
     public static final String VALIDATION_REGEX = "[A-Za-z ]+";
@@ -22,28 +23,9 @@ public class Subject {
         }
         this.subject = s;
     }
-
-    /**
-     * Parses the given string into a {@code Subject}.
-     *
-     * @param text the input subject string
-     * @return a {@code Subject} object
-     * @throws IllegalArgumentException if the input is invalid
-     */
-    public static Subject parse(String text) {
-        requireNonNull(text);
-        String s = text.trim();
-        if (!isValidSubject(s)) {
-            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
-        }
-        return new Subject(s);
-    }
-
     public static boolean isValidSubject(String test) {
         return test.matches(VALIDATION_REGEX);
     }
-
-
     @Override public String toString() {
         return subject;
     }

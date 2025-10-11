@@ -156,14 +156,12 @@ Acceptable values:
 - find student p/ 10–20 — finds all students offering a price range of $10–20/hour.
 - find tutor s/ Math l/ 2–4 p/ 25–50 — finds tutors teaching Math for Levels 2–4, charging $25–$50/hour.
 - find student s/ English s/ Chinese p/ 15 — finds students needing English or Chinese at $15/hour.
-- find s/ Math — finds both tutors and students teaching or studying Math.
 
 ### Notes
 - You can combine multiple filters in one command.
 - Prefixes can appear in any order.
 - The same prefix can appear multiple times with different values.
 - Invalid formats (e.g. p/ abc, l/ 10–5) will show an “Invalid command format” error.
-- Matching is case-insensitive (e.g. Math and math are the same).
   ![result for 'find tutor /s mathematics'](images/FindTutorResult.png)
 
 ### Match/Unmatch a student and a tutor : `match/unmatch`

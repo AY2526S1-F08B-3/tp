@@ -23,6 +23,15 @@ public class Subject {
         this.subject = s;
     }
 
+    public static Subject parse(String text) {
+        requireNonNull(text);
+        String s = text.trim();
+        if (!isValidSubject(s)) {
+            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
+        }
+        return new Subject(s);
+    }
+
     public static boolean isValidSubject(String test) {
         return test.matches(VALIDATION_REGEX);
     }

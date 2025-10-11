@@ -117,27 +117,53 @@ Examples: `list tutors` , `list students`
 
 Returns a filtered list of students/tutors from our database based on one condition (subject, level, or price).
 
-Format: `find <tutor/student> /<field> <filter_value>`
-* `<tutor/student>`: specifies whether to search tutors or students.
-* `<field>`: must be one of the following keywords:
-  * `/s`:  subject
-  * `/l`:  level
-  * `/p`:  price range
-* `<filter_value>`:  the keyword/number/range to match against the chosen field.
+Returns a filtered list of students or tutors from the database based on one or more conditions such as name, subject, level, or price.
 
-Parameter specifications:
-* Acceptable values:
-  * `<tutor/student>` must be exactly tutor or student (case insensitive).
-  * `<field>` must be exactly `/s (subject)`, `/l (level 1–6)`, or `/p (price range)`.
-  * `<filter_value>` must match the field:
-    * `/s <subject>`:  subject keyword (e.g., mathematics, english, chinese, science)
-    * `/l <level>`: integer from 1–6 to simulate primary school p1 - p6.
-    * `/p <range>`:  two integers separated by a dash (e.g., 10-20).
+### Format
+find <tutor/student> <field>/ <filter_value> [<field>/ <filter_value> ...]
 
-Examples:
-* `find Tutor /s mathematics` returns `tutors` with `mathematics` as their subject.
-* `find tutor /l 3` returns `tutors` that teach children at level `3`.
-* `find Student /p 10-20` returns `students` that will accept the price range of `10-20`.
+### Description
+- <tutor/student> specifies whether to search tutors or students.  
+  This field is optional — omitting it searches all persons.
+- <field>/ must be one of the following prefixes:  
+  n/  for name  
+  s/  for subject  
+  l/  for level  
+  p/  for price range
+- <filter_value> is the keyword, number, or range to match for the field.
+- Prefix order does not matter.
+- Multiple prefixes of the same type are allowed (e.g. s/ math s/ science).
+- All conditions are combined with logical AND, meaning all must match.
+
+### Parameter Specifications
+Acceptable values:
+- <tutor/student> must be exactly tutor or student (case-insensitive).
+- <field>/ must be one of the following:
+    - n/  for name
+    - s/  for subject
+    - l/  for level (1–6)
+    - p/  for price range
+- <filter_value> must match the expected field type:
+    - n/ <name>: keyword from the person's name (e.g. Aaron, Tan)
+    - s/ <subject>: subject keyword (e.g. mathematics, english, science)
+    - l/ <level>: single integer from 1–6 or a range like 2–4
+    - p/ <range>: one or two integers separated by a dash (e.g. 10–20, 30)
+
+### Examples
+- find tutor n/ Aaron — finds all tutors with “Aaron” in their name.
+- find tutor s/ Mathematics — finds all tutors teaching Mathematics.
+- find tutor l/ 3 — finds all tutors teaching Level 3 students.
+- find student p/ 10–20 — finds all students offering a price range of $10–20/hour.
+- find tutor s/ Math l/ 2–4 p/ 25–50 — finds tutors teaching Math for Levels 2–4, charging $25–$50/hour.
+- find student s/ English s/ Chinese p/ 15 — finds students needing English or Chinese at $15/hour.
+- find s/ Math — finds both tutors and students teaching or studying Math.
+
+### Notes
+- You can combine multiple filters in one command.
+- Prefixes can appear in any order.
+- The same prefix can appear multiple times with different values.
+- Invalid formats (e.g. p/ abc, l/ 10–5) will show an “Invalid command format” error.
+- Matching is case-insensitive (e.g. Math and math are the same).
   ![result for 'find tutor /s mathematics'](images/FindTutorResult.png)
 
 ### Match/Unmatch a student and a tutor : `match/unmatch`
